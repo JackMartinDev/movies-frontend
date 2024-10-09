@@ -1,10 +1,18 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "./App.css";
+import { client } from "./utils/axios";
 
-function App() {
+const queryClient = new QueryClient();
+
+async function App() {
   return (
-    <div>
-      <p className="text-red-500 text-lg">Hello</p>
-    </div>
+    <>
+      <QueryClientProvider client={queryClient}>
+        <p className="text-red-500 text-lg">Hello</p>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </>
   );
 }
 
