@@ -43,7 +43,7 @@ function Search() {
   };
 
   const { data, error, isLoading } = useQuery<MoviesData>({
-    queryKey: ["movies", query, page],
+    queryKey: ["movies", query],
     queryFn: () => searchMovies(query),
     enabled: !!query,
   });
