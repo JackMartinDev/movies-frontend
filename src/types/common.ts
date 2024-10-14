@@ -4,11 +4,11 @@ export type MoviesData = {
 };
 
 export type Metadata = {
-  current_page: string;
-  page_size: string;
-  first_page: string;
-  last_page: string;
-  total_records: string;
+  current_page: number;
+  page_size: number;
+  first_page: number;
+  last_page: number;
+  total_records: number;
 };
 
 export type Movie = {

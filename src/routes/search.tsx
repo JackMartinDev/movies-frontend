@@ -7,6 +7,7 @@ import { MoviesData } from "../types/common";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { queryBuilder } from "../utils/common";
+import Pagination from "../components/pagination";
 
 type MovieSearch = {
   title?: string;
@@ -60,28 +61,53 @@ function Search() {
     resolver: zodResolver(searchBarSchema),
   });
 
-  const onSubmit = async (data: SearchFormData) => {
+  const onSubmit = (data: SearchFormData) => {
     navigate({
       search: () => ({ title: data.query }),
     });
   };
 
+  const handlePageChange = (newPage: number) => {
+    navigate({
+      search: (prev) => ({ ...prev, page: newPage }),
+    });
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <input
-          type="text"
-          placeholder="Search for movies..."
-          {...register("query")}
-        />
-        {errors.query && <p style={{ color: "red" }}>{errors.query.message}</p>}
-      </div>
-      <button type="submit">Search</button>
+    <div className="flex flex-col gap-5">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <input
+            type="text"
+            placeholder="Search for movies..."
+            {...register("query")}
+          />
+          {errors.query && (
+            <p style={{ color: "red" }}>{errors.query.message}</p>
+          )}
+        </div>
+        <button type="submit">Search</button>
+      </form>
+
       {error && (
         <p style={{ color: "red" }}>An error occurred: {error.message}</p>
       )}
       {isLoading && <p>Loading...</p>}
-      {data?.movies.map((movie) => <p key={movie.id}>{movie.title}</p>)}
-    </form>
+      <div>
+        <p>current_page: {data?.metadata.current_page}</p>
+        <p>page_size: {data?.metadata.page_size}</p>
+        <p>first_page: {data?.metadata.first_page}</p>
+        <p>last_page: {data?.metadata.last_page}</p>
+        <p>total_records: {data?.metadata.total_records}</p>
+      </div>
+
+      <div>
+        {data?.movies.map((movie) => <p key={movie.id}>{movie.title}</p>)}
+      </div>
+
+      {data?.metadata && (
+        <Pagination metadata={data?.metadata} onPageChange={handlePageChange} />
+      )}
+    </div>
   );
 }

@@ -21,16 +21,11 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const moviesQuery = useSuspenseQuery(moviesQueryOptions);
-  const { metadata, movies } = moviesQuery.data;
+  const { movies } = moviesQuery.data;
   return (
     <div>
-      <p>current_page: {metadata.current_page}</p>
-      <p>page_size: {metadata.page_size}</p>
-      <p>first_page_page: {metadata.first_page}</p>
-      <p>last_page: {metadata.last_page}</p>
-      <p>total_records: {metadata.total_records}</p>
       {movies.map((movie) => (
-        <p key={movie.id}>{movie.id}</p>
+        <p key={movie.id}>{movie.title}</p>
       ))}
     </div>
   );
