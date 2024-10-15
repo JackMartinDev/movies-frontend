@@ -14,8 +14,12 @@ export type Metadata = {
 export type Movie = {
   id: number;
   title: string;
-  year: number;
-  runtime: number;
+  overview: string;
+  language: string;
+  release_date: string;
+  rating: number;
+  poster_url: string;
+  backdrop_url: string;
   genres: string[];
   version: number;
 };
