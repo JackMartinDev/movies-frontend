@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { queryBuilder } from "../utils/common";
 import Pagination from "../components/pagination";
+import MovieCard from "../components/movie-card";
 
 type MovieSearch = {
   title?: string;
@@ -93,19 +94,13 @@ function Search() {
         <p style={{ color: "red" }}>An error occurred: {error.message}</p>
       )}
       {isLoading && <p>Loading...</p>}
-      <div>
-        <p>current_page: {data?.metadata.current_page}</p>
-        <p>page_size: {data?.metadata.page_size}</p>
-        <p>first_page: {data?.metadata.first_page}</p>
-        <p>last_page: {data?.metadata.last_page}</p>
-        <p>total_records: {data?.metadata.total_records}</p>
+      <div className="grid grid-cols-4 gap-4">
+        {data?.movies.map((movie) => (
+          <MovieCard key={movie.id} movie={movie} />
+        ))}
       </div>
 
-      <div>
-        {data?.movies.map((movie) => <p key={movie.id}>{movie.title}</p>)}
-      </div>
-
-      {data?.metadata && (
+      {data && data.movies.length > 0 && (
         <Pagination metadata={data?.metadata} onPageChange={handlePageChange} />
       )}
     </div>
