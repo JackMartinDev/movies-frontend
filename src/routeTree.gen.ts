@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as SearchImport } from './routes/search'
 import { Route as IndexImport } from './routes/index'
+import { Route as MoviesMovieIdImport } from './routes/movies.$movieId'
 
 // Create/Update Routes
 
@@ -23,6 +24,11 @@ const SearchRoute = SearchImport.update({
 
 const IndexRoute = IndexImport.update({
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const MoviesMovieIdRoute = MoviesMovieIdImport.update({
+  path: '/movies/$movieId',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -44,6 +50,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SearchImport
       parentRoute: typeof rootRoute
     }
+    '/movies/$movieId': {
+      id: '/movies/$movieId'
+      path: '/movies/$movieId'
+      fullPath: '/movies/$movieId'
+      preLoaderRoute: typeof MoviesMovieIdImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -52,36 +65,41 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/search': typeof SearchRoute
+  '/movies/$movieId': typeof MoviesMovieIdRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/search': typeof SearchRoute
+  '/movies/$movieId': typeof MoviesMovieIdRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/search': typeof SearchRoute
+  '/movies/$movieId': typeof MoviesMovieIdRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/search'
+  fullPaths: '/' | '/search' | '/movies/$movieId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/search'
-  id: '__root__' | '/' | '/search'
+  to: '/' | '/search' | '/movies/$movieId'
+  id: '__root__' | '/' | '/search' | '/movies/$movieId'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SearchRoute: typeof SearchRoute
+  MoviesMovieIdRoute: typeof MoviesMovieIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SearchRoute: SearchRoute,
+  MoviesMovieIdRoute: MoviesMovieIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,7 +115,8 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/search"
+        "/search",
+        "/movies/$movieId"
       ]
     },
     "/": {
@@ -105,6 +124,9 @@ export const routeTree = rootRoute
     },
     "/search": {
       "filePath": "search.tsx"
+    },
+    "/movies/$movieId": {
+      "filePath": "movies.$movieId.tsx"
     }
   }
 }
