@@ -8,9 +8,14 @@ type Props = {
 const MovieCard = ({ movie }: Props) => {
   return (
     <div>
-      <img src={movie.poster_url} width="200px" />
+      <div className="group relative w-fit cursor-pointer">
+        <img src={movie.poster_url} width="200px" />
+        <button className="absolute bottom-0 opacity-0 group-hover:opacity-100">
+          Add to list
+        </button>
+      </div>
       <Link to="/movies/$movieId" params={{ movieId: String(movie.id) }}>
-        {movie.title}
+        <p>{movie.title}</p>
       </Link>
     </div>
   );
