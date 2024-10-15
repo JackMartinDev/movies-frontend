@@ -8,9 +8,9 @@ type Props = {
 const MovieCard = ({ movie }: Props) => {
   return (
     <div>
-      <div className="group relative w-fit cursor-pointer">
-        <img src={movie.poster_url} width="200px" />
-        <button className="absolute bottom-0 opacity-0 group-hover:opacity-100">
+      <div className="group relative w-fit cursor-pointer flex justify-center">
+        <img src={movie.poster_url} alt={movie.title} width="200px" />
+        <button className="absolute bottom-3 opacity-0 group-hover:opacity-100 transition-opacity duration-100 bg-blue-500 text-white p-2 rounded w-[80%] hover:bg-green-500">
           Add to list
         </button>
       </div>
