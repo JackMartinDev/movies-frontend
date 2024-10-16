@@ -20,7 +20,9 @@ export const Route = createRootRouteWithContext<{
         </Link>
       </div>
       <hr />
-      <Outlet />
+      <main className="container flex-grow mx-auto my-auto">
+        <Outlet />
+      </main>
       <TanStackRouterDevtools />
     </>
   ),

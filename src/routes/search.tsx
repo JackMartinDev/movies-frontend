@@ -75,19 +75,35 @@ function Search() {
   };
 
   return (
-    <div className="flex flex-col gap-5">
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <div className="flex flex-col">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-row">
         <div>
           <input
             type="text"
             placeholder="Search for movies..."
+            className="border-y border-black p-1.5"
             {...register("query")}
           />
           {errors.query && (
             <p style={{ color: "red" }}>{errors.query.message}</p>
           )}
         </div>
-        <button type="submit">Search</button>
+        <button type="submit" className="border border-red-400 px-1.5">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="2"
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M11 4a7 7 0 100 14 7 7 0 000-14zM21 21l-4.35-4.35"
+            />
+          </svg>
+        </button>
       </form>
 
       {error && (
