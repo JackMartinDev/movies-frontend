@@ -17,7 +17,7 @@ const getYear = (dateString: string) => {
 const MovieCard = ({ movie, openModal }: Props) => {
   return (
     <div>
-      <div className="group relative w-fit cursor-pointer flex justify-center ">
+      <div className="group relative w-fit h-full cursor-pointer flex justify-center ">
         <Link to="/movies/$movieId" params={{ movieId: String(movie.id) }}>
           <img
             src={movie.poster_url}
