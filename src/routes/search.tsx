@@ -117,7 +117,7 @@ function Search() {
           <input
             type="text"
             placeholder="Search for movies..."
-            className="flex-grow outline-none"
+            className="flex-grow outline-none focus:ring-0 focus:bg-transparent"
             {...register("query")}
           />
           {errors.query && (
