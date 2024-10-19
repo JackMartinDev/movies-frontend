@@ -109,20 +109,21 @@ function Search() {
         </div>
       </dialog>
 
-      <div className="flex flex-col">
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-row">
-          <div>
-            <input
-              type="text"
-              placeholder="Search for movies..."
-              className="border-y border-black p-1.5"
-              {...register("query")}
-            />
-            {errors.query && (
-              <p style={{ color: "red" }}>{errors.query.message}</p>
-            )}
-          </div>
-          <button type="submit" className="border border-red-400 px-1.5">
+      <div className="flex flex-col items-center gap-8 mt-4">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex items-center border border-black rounded-3xl py-2 px-4 w-1/2"
+        >
+          <input
+            type="text"
+            placeholder="Search for movies..."
+            className="flex-grow outline-none"
+            {...register("query")}
+          />
+          {errors.query && (
+            <p style={{ color: "red" }}>{errors.query.message}</p>
+          )}
+          <button type="submit" className="px-1.5">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
