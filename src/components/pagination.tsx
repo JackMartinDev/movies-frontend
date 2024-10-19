@@ -35,7 +35,7 @@ const PaginationBar = ({ metadata }: PaginationBarProps) => {
     metadata.total_records,
   );
   return (
-    <div>
+    <div className="text-center">
       <p>
         Displaying result {startRecord}-{endRecord} of {metadata.total_records}
       </p>
