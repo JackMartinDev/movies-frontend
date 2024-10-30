@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { queryBuilder } from "../utils/common";
 import Pagination from "../components/pagination";
 import MovieCard from "../components/movie-card";
+import LoadingSpinner from "../components/loading-spinner";
 
 type MovieSearch = {
   title?: string;
@@ -144,7 +145,7 @@ function Search() {
         {error && (
           <p style={{ color: "red" }}>An error occurred: {error.message}</p>
         )}
-        {isLoading && <p>Loading...</p>}
+        {isLoading && <LoadingSpinner />}
         <div className="grid grid-cols-4 gap-4">
           {data?.movies.map((movie) => (
             <MovieCard key={movie.id} movie={movie} openModal={openModal} />
