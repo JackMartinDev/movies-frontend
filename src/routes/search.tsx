@@ -50,7 +50,7 @@ function Search() {
     return response.data;
   };
 
-  const { data, error, isLoading } = useQuery<MoviesData>({
+  const { data, isError, error, isLoading } = useQuery<MoviesData>({
     queryKey: ["movies", query],
     queryFn: () => searchMovies(query),
     enabled: !!query,
@@ -85,9 +85,14 @@ function Search() {
       <dialog
         ref={modalRef}
         className="rounded-lg p-6 bg-white shadow-lg max-w-xl w-full"
+        aria-labelledby="dialog-title"
+        aria-describedby="dialog-description"
+        role="dialog"
       >
-        <h2 className="text-lg font-semibold">Add to list</h2>
-        <p className="mt-2 text-gray-600">
+        <h2 id="dialog-title" className="text-lg font-semibold">
+          Add to list
+        </h2>
+        <p id="dialog-description" className="mt-2 text-gray-600">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum
           sapiente repellendus aliquid? Placeat accusamus molestias ducimus,
           corrupti at aliquam nemo velit? Sint, quibusdam vitae dignissimos non
@@ -114,17 +119,19 @@ function Search() {
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex items-center border border-black rounded-3xl py-2 px-4 w-1/2"
+          role="search"
         >
           <input
             type="text"
             placeholder="Search for movies..."
             className="flex-grow outline-none focus:ring-0 focus:bg-transparent"
             {...register("query")}
+            aria-label="Search movies"
           />
           {errors.query && (
             <p style={{ color: "red" }}>{errors.query.message}</p>
           )}
-          <button type="submit" className="px-1.5">
+          <button type="submit" className="px-1.5" aria-label="Search">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -142,22 +149,31 @@ function Search() {
           </button>
         </form>
 
-        {error && (
+        {isLoading && <LoadingSpinner />}
+        {isError && (
           <p style={{ color: "red" }}>An error occurred: {error.message}</p>
         )}
-        {isLoading && <LoadingSpinner />}
-        <div className="grid grid-cols-4 gap-4">
-          {data?.movies.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} openModal={openModal} />
-          ))}
-        </div>
 
-        {data && data.movies.length > 0 && (
-          <Pagination
-            metadata={data?.metadata}
-            onPageChange={handlePageChange}
-          />
-        )}
+        {data &&
+          (data.movies.length > 0 ? (
+            <>
+              <div className="grid grid-cols-2 gap-4 md:grid-cols-4 sm:grid-cols-3">
+                {data.movies.map((movie) => (
+                  <MovieCard
+                    key={movie.id}
+                    movie={movie}
+                    openModal={openModal}
+                  />
+                ))}
+              </div>
+              <Pagination
+                metadata={data.metadata}
+                onPageChange={handlePageChange}
+              />
+            </>
+          ) : (
+            <div>No search results found</div>
+          ))}
       </div>
     </>
   );
